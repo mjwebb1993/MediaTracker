@@ -5,6 +5,7 @@ const mongoose = require("mongoose");
 const books = require("./routers/books");
 const games = require("./routers/games");
 const movies = require("./routers/movies");
+const { response } = require("express");
 
 dotenv.config();
 
@@ -51,7 +52,14 @@ app.get("/status", (request, response) => {
   // End and return the response
   response.send(JSON.stringify({ message: "Service healthy" }));
 });
-
+app.get("/", (request, response) => {
+  response.send(
+    JSON.stringify({
+      message:
+        "This route does not contain any data, but you have connected successfully. Please use /books, /games or /movies to access data."
+    })
+  );
+});
 app.get("/echo/:input", (request, response) => {
   const message = request.params.input;
   response.status(418).json({ echo: message });
